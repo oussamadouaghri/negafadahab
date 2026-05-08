@@ -1,0 +1,25 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# Editor folders
+.idea/
+.vscode/
+*.sublime-*
+
+# Logs / backup
+*.log
+*.bak
+
+# Local env files (just in case)
+.env
+.env.*
+!.env.example
+
+# Build artifacts (we have none yet, but futureproofing)
+node_modules/
+dist/
+.cache/

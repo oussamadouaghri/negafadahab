@@ -1,0 +1,12 @@
+# Cloudflare Pages redirects
+# Format: source destination [status]
+
+# Force www → apex (negafadahab.ma is canonical)
+https://www.negafadahab.ma/* https://negafadahab.ma/:splat 301!
+
+# Hide internal/dev files from public
+/.htaccess /404.html 404
+/DEPLOYMENT.md /404.html 404
+/WIDGET-INSTAGRAM.md /404.html 404
+/CLOUDFLARE-DEPLOY.md /404.html 404
+/README.md /404.html 404

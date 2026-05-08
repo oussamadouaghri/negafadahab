@@ -1,0 +1,82 @@
+# =====================================================
+# DAHAB — Apache configuration for shared hosting (cPanel)
+# Place this file at the public root of negafadahab.ma
+# =====================================================
+
+# --- Force HTTPS ---
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# --- Force non-www to canonical apex (negafadahab.ma) ---
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# --- Pretty URLs: serve /en/ as /en/index.html, etc. ---
+DirectoryIndex index.html
+
+# --- Custom 404 page ---
+ErrorDocument 404 /404.html
+
+# --- Cache control (browser caching) ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                                "access plus 1 month"
+
+  # HTML — never cache the page itself, just its assets
+  ExpiresByType text/html                       "access plus 0 seconds"
+
+  # CSS / JS — versioned assets cached 1 year (bump filename to bust)
+  ExpiresByType text/css                        "access plus 1 year"
+  ExpiresByType application/javascript          "access plus 1 year"
+  ExpiresByType text/javascript                 "access plus 1 year"
+
+  # Fonts
+  ExpiresByType font/woff2                      "access plus 1 year"
+  ExpiresByType font/woff                       "access plus 1 year"
+  ExpiresByType application/font-woff2          "access plus 1 year"
+
+  # Images
+  ExpiresByType image/jpeg                      "access plus 6 months"
+  ExpiresByType image/png                       "access plus 6 months"
+  ExpiresByType image/webp                      "access plus 6 months"
+  ExpiresByType image/avif                      "access plus 6 months"
+  ExpiresByType image/svg+xml                   "access plus 6 months"
+  ExpiresByType image/x-icon                    "access plus 1 year"
+
+  # Video
+  ExpiresByType video/mp4                       "access plus 1 month"
+
+  # Sitemap / robots
+  ExpiresByType application/xml                 "access plus 1 day"
+  ExpiresByType text/xml                        "access plus 1 day"
+</IfModule>
+
+# --- Compression (gzip) ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE application/xml application/xhtml+xml
+  AddOutputFilterByType DEFLATE image/svg+xml font/woff2 font/woff
+</IfModule>
+
+# --- Security headers ---
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header set X-Frame-Options "SAMEORIGIN"
+  # HSTS (only enable AFTER HTTPS is confirmed working — start with short max-age)
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# --- Disable directory listing ---
+Options -Indexes
+
+# --- Block access to sensitive files ---
+<FilesMatch "^(\.htaccess|\.git|\.env|README|DEPLOY|.*\.log|.*\.bak)$">
+  Require all denied
+</FilesMatch>
+
+# --- UTF-8 by default ---
+AddDefaultCharset UTF-8
