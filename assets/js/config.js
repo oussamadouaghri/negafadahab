@@ -8,7 +8,8 @@ window.DAHAB_CONFIG = {
   phone:       "+212 661 62 79 89",
   whatsapp:    "212661627989",                    // digits only, no + or spaces
   email:       "contact@negafadahab.ma",
-  address:     "14, Rue de la Liberté, Casablanca 20250",
+  address:     "Negafa Dahab Maison Mariée, Casablanca",
+  mapsUrl:     "https://www.google.com/maps/place/Negafa+Dahab+Maison+Mari%C3%A9e/@33.5688744,-7.626472,17z/data=!3m1!4b1!4m6!3m5!1s0xda7cdc6066617ef:0xc5bc9b69dc99b32a!8m2!3d33.5688744!4d-7.626472!16s%2Fg%2F11njtmp37s",
   hours:       "7j/7 sur rendez-vous",
 
   // ── Social ────────────────────────────────────────────

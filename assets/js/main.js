@@ -19,6 +19,9 @@
       if (el.tagName === 'A') el.href = 'mailto:' + (cfg.email || '');
     });
     document.querySelectorAll('[data-cfg-address]').forEach(el => { el.textContent = cfg.address || ''; });
+    document.querySelectorAll('[data-cfg-maps-link]').forEach(el => {
+      if (cfg.mapsUrl) el.href = cfg.mapsUrl;
+    });
     document.querySelectorAll('[data-cfg-hours]').forEach(el => { el.textContent = cfg.hours || ''; });
     document.querySelectorAll('[data-cfg-whatsapp]').forEach(el => {
       const wa = (cfg.whatsapp || '').replace(/\D/g, '');
